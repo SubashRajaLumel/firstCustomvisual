@@ -9,7 +9,8 @@ function GridValues({ theme }) {
 
   const onRowSelect = (row) => {
     MatrixService.updateSelection(row);
-    setSelectedRow(row.value);
+    if (row.value === selectedRow) setSelectedRow(null);
+    else setSelectedRow(row.value);
   };
   return (
     <div className="gridValues">

@@ -105,7 +105,10 @@ function GridValues({ theme }) {
     // if (Object.keys(measure)?.length === 0) return null;
     const onRowSelect = (row) => {
         _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__/* .MatrixService */ .Z.updateSelection(row);
-        setSelectedRow(row.value);
+        if (row.value === selectedRow)
+            setSelectedRow(null);
+        else
+            setSelectedRow(row.value);
     };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "gridValues" },
         react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, rowValues.map((row, index) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridRow ${theme}-theme ${selectedRow === row?.value ? "selectedRow" : ""}`, style: { borderTop: index !== 0 ? "2px solid black" : "" } },
