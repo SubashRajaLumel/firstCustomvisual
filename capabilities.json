@@ -1,0 +1,77 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Rows",
+      "name": "rows",
+      "kind": "Grouping"
+    },
+    {
+      "displayName": "Columns",
+      "name": "columns",
+      "kind": "Grouping"
+    },
+    {
+      "displayName": "Measure Values",
+      "name": "measure",
+      "kind": "Measure"
+    }
+  ],
+  "objects": {
+    "general": {
+      "displayName": "General",
+      "properties": {
+        "theme": {
+          "displayName": "Theme",
+          "type": {
+            "text": true
+          }
+        },
+        "formatOption": {
+          "displayName": "Format Option",
+          "type": {
+            "text": true
+          }
+        }
+      }
+    }
+  },
+  "dataViewMappings": [
+    {
+      "matrix": {
+        "rows": {
+          "for": {
+            "in": "rows"
+          }
+        },
+        "columns": {
+          "for": {
+            "in": "columns"
+          }
+        },
+        "values": {
+          "select": [
+            {
+              "bind": {
+                "to": "measure"
+              }
+            }
+          ]
+        }
+      },
+      "conditions": [
+        {
+          "rows": {
+            "max": 1
+          },
+          "columns": {
+            "max": 1
+          },
+          "measure": {
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "privileges": []
+}

@@ -1,0 +1,4 @@
+import powerbiVisualsApi from "powerbi-visuals-api";
+import IVisualPlugin = powerbiVisualsApi.visuals.plugins.IVisualPlugin;
+declare var firstCustomVisual429AA354ADF84BEABF827359527B0927_DEBUG: IVisualPlugin;
+export default firstCustomVisual429AA354ADF84BEABF827359527B0927_DEBUG;

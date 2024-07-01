@@ -1,0 +1,51 @@
+.toolBar {
+  padding: 30px;
+  height: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+  border: 2px solid black;
+}
+.toolBar .toolBarOption {
+  min-width: 200px;
+}
+.toolBar .toggleButton {
+  min-width: 100px;
+}
+.toolBar .formatOption {
+  min-width: 200px;
+}
+.datagrid {
+  margin-top: 30px;
+  overflow: auto;
+  height: 450px;
+  padding: 20px;
+}
+.datagrid .gridTable {
+  border: 2px solid black;
+  width: fit-content;
+}
+.datagrid .gridTable .gridRow {
+  display: flex;
+}
+.datagrid .gridTable .gridCell {
+  width: 200px;
+  text-align: center;
+}
+.datagrid .gridTable .gridHeader {
+  font-size: 18px;
+}
+.light-theme {
+  border-color: black !important;
+  color: black;
+  background-color: white;
+}
+.dark-theme {
+  border-color: white !important;
+  color: white;
+  background-color: black;
+}
+
+
+/*# sourceMappingURL=https://localhost:8080/assets/visual.css.map*/
