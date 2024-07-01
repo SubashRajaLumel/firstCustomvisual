@@ -73,5 +73,6 @@
       ]
     }
   ],
-  "privileges": []
+  "privileges": [],
+  "supportsMultiVisualSelection": true
 }

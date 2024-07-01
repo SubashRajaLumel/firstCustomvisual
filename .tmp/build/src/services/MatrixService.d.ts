@@ -13,7 +13,9 @@ export declare class MatrixService {
     static dataRows: any;
     static flatDataRowMapping: any;
     static formattedData: any;
+    static selectionManager: any;
     static metaData: any;
+    static init(): void;
     static persistProperties(changes: any): void;
     static getPersistedProperties(): void;
     static collectData(): void;
@@ -22,5 +24,6 @@ export declare class MatrixService {
     static getDataKey(row: any, column: any, measure: any): string;
     static collectDataRows(): void;
     static collectFormattedData(): void;
+    static updateSelection(row: any): void;
 }
 export {};

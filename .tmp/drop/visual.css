@@ -29,9 +29,12 @@
 .datagrid .gridTable .gridRow {
   display: flex;
 }
-.datagrid .gridTable .gridCell {
+.datagrid .gridTable .gridRow .gridCell {
   width: 200px;
   text-align: center;
+}
+.datagrid .gridTable .selectedRow {
+  background-color: #99ccff !important;
 }
 .datagrid .gridTable .gridHeader {
   font-size: 18px;

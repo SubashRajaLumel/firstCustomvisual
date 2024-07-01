@@ -48,6 +48,7 @@ export class Visual implements IVisual {
 
   public update(options: VisualUpdateOptions) {
     MatrixService.options = options;
+    MatrixService.init();
     MatrixService.getPersistedProperties();
     MatrixService.collectData();
     const root = createRoot(this.target);

@@ -19,6 +19,7 @@ export class MatrixService {
   static dataRows: any = [];
   static flatDataRowMapping: any = {};
   static formattedData: any = {};
+  static selectionManager: any;
   static metaData: any = {
     column: {},
     columnValues: [],
@@ -26,6 +27,11 @@ export class MatrixService {
     rowValues: [],
     measure: {},
   };
+
+  static init() {
+    this.dataView = this.options.dataViews[0];
+    this.selectionManager = this.host.createSelectionManager();
+  }
   static persistProperties(changes) {
     const { section, property, value } = changes;
     MatrixService.host.persistProperties({
@@ -42,7 +48,6 @@ export class MatrixService {
   }
 
   static getPersistedProperties() {
-    this.dataView = this.options.dataViews[0];
     const {
       metadata: { objects },
     } = this.dataView;
@@ -161,5 +166,13 @@ export class MatrixService {
       );
       this.formattedData.flatDataRowMapping[dataKey] = formattedValue;
     });
+  }
+
+  static updateSelection(row) {
+    const selectionId = this.host
+      .createSelectionIdBuilder()
+      .withMatrixNode(row, this.dataView.matrix.rows.levels)
+      .createSelectionId();
+    this.selectionManager.select(selectionId);
   }
 }

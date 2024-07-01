@@ -11,7 +11,7 @@ var firstCustomVisual429AA354ADF84BEABF827359527B0927_DEBUG;
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6540);
 /* harmony import */ var _sections_Toolbar_Toolbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1962);
-/* harmony import */ var _sections_DataGrid_DataGrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(104);
+/* harmony import */ var _sections_DataGrid_DataGrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5104);
 
 
 
@@ -25,7 +25,7 @@ const Matrix = () => {
 
 /***/ }),
 
-/***/ 104:
+/***/ 5104:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -33,8 +33,8 @@ const Matrix = () => {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6540);
-/* harmony import */ var _GridHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(543);
-/* harmony import */ var _GridValues__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(330);
+/* harmony import */ var _GridHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5543);
+/* harmony import */ var _GridValues__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1330);
 /* harmony import */ var _services_MatrixService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3361);
 /* harmony import */ var _constants_commonConstants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4276);
 
@@ -55,7 +55,7 @@ function DataGrid() {
 
 /***/ }),
 
-/***/ 543:
+/***/ 5543:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -64,7 +64,7 @@ function DataGrid() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6540);
 /* harmony import */ var _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3361);
-/* harmony import */ var _utils_commonUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(884);
+/* harmony import */ var _utils_commonUtils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1884);
 /* harmony import */ var _constants_commonConstants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4276);
 
 
@@ -87,7 +87,7 @@ function GridHeader({ theme }) {
 
 /***/ }),
 
-/***/ 330:
+/***/ 1330:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -101,21 +101,25 @@ function GridHeader({ theme }) {
 function GridValues({ theme }) {
     const { rowValues, columnValues, measure } = _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__/* .MatrixService */ .Z.metaData;
     const { flatDataRowMapping } = _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__/* .MatrixService */ .Z.formattedData;
-    console.log(flatDataRowMapping);
+    const [selectedRow, setSelectedRow] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
     // if (Object.keys(measure)?.length === 0) return null;
+    const onRowSelect = (row) => {
+        _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__/* .MatrixService */ .Z.updateSelection(row);
+        setSelectedRow(row.value);
+    };
     return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "gridValues" },
-        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, rowValues.map((row, index) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridRow ${theme}-theme`, style: { borderTop: index !== 0 ? "2px solid black" : "" } },
-            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "gridCell" }, row.value || "(Unknown)"),
+        react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, rowValues.map((row, index) => (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridRow ${theme}-theme ${selectedRow === row?.value ? "selectedRow" : ""}`, style: { borderTop: index !== 0 ? "2px solid black" : "" } },
+            react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: "gridCell", onClick: () => onRowSelect(row) }, row.value || "(Unknown)"),
             columnValues.length !== 0
                 ? columnValues.map((col) => {
                     const key = _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__/* .MatrixService */ .Z.getDataKey(row?.value, col?.value, measure.queryName);
                     const data = flatDataRowMapping[key];
-                    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridCell ${theme}-theme`, style: { borderLeft: "2px solid black" } }, data || ""));
+                    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridCell ${theme}-theme ${selectedRow === row?.value ? "selectedRow" : ""}`, style: { borderLeft: "2px solid black" } }, data || ""));
                 })
                 : [measure].map(() => {
                     const key = _services_MatrixService__WEBPACK_IMPORTED_MODULE_1__/* .MatrixService */ .Z.getDataKey(row?.value, "", measure.queryName);
                     const data = flatDataRowMapping[key];
-                    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridCell ${theme}-theme`, style: { borderLeft: "2px solid black" } }, data || ""));
+                    return (react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", { className: `gridCell ${theme}-theme ${selectedRow === row?.value ? "selectedRow" : ""}`, style: { borderLeft: "2px solid black" } }, data || ""));
                 })))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GridValues);
@@ -288,6 +292,7 @@ class MatrixService {
     static dataRows = [];
     static flatDataRowMapping = {};
     static formattedData = {};
+    static selectionManager;
     static metaData = {
         column: {},
         columnValues: [],
@@ -295,6 +300,10 @@ class MatrixService {
         rowValues: [],
         measure: {},
     };
+    static init() {
+        this.dataView = this.options.dataViews[0];
+        this.selectionManager = this.host.createSelectionManager();
+    }
     static persistProperties(changes) {
         const { section, property, value } = changes;
         MatrixService.host.persistProperties({
@@ -310,7 +319,6 @@ class MatrixService {
         });
     }
     static getPersistedProperties() {
-        this.dataView = this.options.dataViews[0];
         const { metadata: { objects }, } = this.dataView;
         if (!objects)
             return;
@@ -413,12 +421,19 @@ class MatrixService {
             this.formattedData.flatDataRowMapping[dataKey] = formattedValue;
         });
     }
+    static updateSelection(row) {
+        const selectionId = this.host
+            .createSelectionIdBuilder()
+            .withMatrixNode(row, this.dataView.matrix.rows.levels)
+            .createSelectionId();
+        this.selectionManager.select(selectionId);
+    }
 }
 
 
 /***/ }),
 
-/***/ 884:
+/***/ 1884:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -544,6 +559,7 @@ class Visual {
     }
     update(options) {
         _services_MatrixService__WEBPACK_IMPORTED_MODULE_3__/* .MatrixService */ .Z.options = options;
+        _services_MatrixService__WEBPACK_IMPORTED_MODULE_3__/* .MatrixService */ .Z.init();
         _services_MatrixService__WEBPACK_IMPORTED_MODULE_3__/* .MatrixService */ .Z.getPersistedProperties();
         _services_MatrixService__WEBPACK_IMPORTED_MODULE_3__/* .MatrixService */ .Z.collectData();
         const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__/* .createRoot */ .H)(this.target);

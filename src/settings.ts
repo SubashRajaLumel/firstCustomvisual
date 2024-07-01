@@ -60,11 +60,11 @@ class GeneralSettings extends FormattingSettingsCard {
   //     value: { value: "" }
   // });
 
-  fontSize = new formattingSettings.NumUpDown({
-    name: "fontSize",
-    displayName: "Text Size",
-    value: 12,
-  });
+  // fontSize = new formattingSettings.NumUpDown({
+  //   name: "fontSize",
+  //   displayName: "Text Size",
+  //   value: 12,
+  // });
 
   //   theme = new formattingSettings.NumUpDown({
   //     name: "theme",
@@ -79,7 +79,7 @@ class GeneralSettings extends FormattingSettingsCard {
     // this.showAllDataPoints,
     // this.fill,
     // this.fillRule,
-    this.fontSize,
+    // this.fontSize,
   ];
 }
 
